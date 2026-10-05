@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="blue">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1424" />
+  <title>Music is my life</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="local-launch-notice" class="local-launch-notice" role="status" hidden>
+    To use the player, close this tab and double-click <strong>start-player.bat</strong> in the app folder.
+  </div>
+  <div class="shell">
+    <aside class="now" aria-label="Music player">
+      <p class="eyebrow player-eyebrow">NOW PLAYING</p>
+      <div id="cover" class="cover" aria-hidden="true">♪</div>
+      <h2 id="now-title">Nothing playing</h2>
+      <p id="now-artist">Add music to get started</p>
+
+      <input id="seek" class="range" type="range" min="0" max="0" step="any" value="0" aria-label="Track position" />
+      <div class="times"><span id="t-cur">0:00</span><span id="t-dur">0:00</span></div>
+
+      <div class="controls">
+        <button id="btn-shuffle" title="Shuffle playlist">🔀</button>
+        <button id="btn-prev" title="Previous track (P)">⏮</button>
+        <button id="btn-play" class="play" title="Play / pause (Space)">▶</button>
+        <button id="btn-next" title="Next track (N)">⏭</button>
+        <button id="btn-loop" title="Repeat mode">🔁</button>
+      </div>
+      <p id="loop-label" class="hint">Repeat: off</p>
+
+      <div class="volume-heading"><span>Volume</span><output id="vol-value" for="vol" aria-live="polite">100%</output></div>
+      <div class="vol">
+        <button id="btn-mute" title="Mute (M)">🔊</button>
+        <input id="vol" class="range" type="range" min="0" max="100" step="1" value="100" aria-label="Volume" />
+      </div>
+      <p class="hint">Shortcuts: Space, N, P, M</p>
+    </aside>
+
+    <main class="library" id="library">
+      <header>
+        <div>
+          <p class="eyebrow">YOUR PERSONAL LIBRARY</p>
+          <h1>Music is my life</h1>
+          <p id="season-badge" class="season-badge" hidden><span id="season-icon" aria-hidden="true"></span><span id="season-name"></span></p>
+        </div>
+        <p id="summary">0 songs</p>
+      </header>
+      <div id="season-decor" class="season-decor" aria-hidden="true" hidden></div>
+
+      <div class="toolbar">
+        <button id="btn-files" class="primary">＋ Add local songs</button>
+        <input id="in-file" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac,.aac,.opus" multiple hidden />
+        <select id="in-where" aria-label="Where to add songs">
+          <option value="start">At the beginning</option>
+          <option value="end" selected>At the end</option>
+          <option value="index">At a position…</option>
+        </select>
+        <input id="in-index" type="number" min="1" placeholder="Position" disabled aria-label="Position" />
+        <input id="in-search" type="search" placeholder="Search playlist" aria-label="Search" />
+        <button id="btn-clear" class="danger">Clear</button>
+      </div>
+      <p class="local-files-note">Choose one or more audio files from your device. They stay on this device and are not uploaded.</p>
+      <p id="msg" role="status"></p>
+
+      <section class="playlist-section" aria-labelledby="playlist-heading">
+        <div class="playlist-heading">
+          <h2 id="playlist-heading">Your songs</h2>
+          <span id="playlist-count" class="playlist-count">0</span>
+        </div>
+        <ol id="list" class="list"></ol>
+        <p id="empty" class="empty">♪<br /><strong>Your next song starts here</strong><br />Drop audio files here or choose “Add local songs”.</p>
+      </section>
+
+      <section class="youtube-panel" aria-labelledby="youtube-heading">
+        <div class="youtube-heading">
+          <div>
+            <p class="eyebrow">VIDEO SEARCH</p>
+            <h2 id="youtube-heading">YouTube</h2>
+          </div>
+          <span class="youtube-mark" aria-hidden="true">▶</span>
+        </div>
+        <p class="youtube-description">Search YouTube for a song or artist. Results open in a new tab.</p>
+
+        <form class="youtube-search" action="https://www.youtube.com/results" method="get" target="_blank" rel="noopener noreferrer">
+          <label class="sr-only" for="youtube-query">Search YouTube</label>
+          <input id="youtube-query" name="search_query" type="search" placeholder="Search songs or artists" required />
+          <button class="youtube-search-button" type="submit">
+            <svg class="youtube-search-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z" />
+            </svg>
+            Search on YouTube
+          </button>
+        </form>
+      </section>
+    </main>
+  </div>
+  <script>
+    if (window.location.protocol === "file:") {
+      document.getElementById("local-launch-notice").hidden = false;
+    }
+  </script>
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>
